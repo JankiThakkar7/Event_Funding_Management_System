@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# Django stuff
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Logs
+logs/
+*.log
+*.pot
+local_settings.py
+
+# Environment variables
+.env
+*.env
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Migrations (optional, if you prefer not tracking them)
+*/migrations/*.py
+*/migrations/*.pyc
+
+# Celery task queue
+celerybeat-schedule
+celerybeat.pid
+
+# Cache files
+*.cache
+*.mo
+*.swp
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Test & Debug files
+test.db
+debug.log
+
+# Docker
+docker-compose.override.yml
+
+# Node.js dependencies (if using frontend with Django)
+node_modules/
+npm-debug.log
+yarn-error.log
