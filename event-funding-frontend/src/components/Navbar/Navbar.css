@@ -1,0 +1,19 @@
+.navbar-brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff !important;
+}
+
+.nav-link {
+  color: #bbb !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #fff !important;
+}
+
+.navbar-nav .nav-item .active {
+  color: #fff !important;
+  font-weight: bold;
+}
