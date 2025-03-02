@@ -1,96 +1,65 @@
-import React from "react";
-import { motion } from "framer-motion";
-import "./Home.css";
-import Navbar from "../Navbar/Navbar";
+import React from 'react';
+import Navbar from './Navbar';
+import './Home.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div className="home">
-      {/* Navbar */}
-      {/* <nav className="navbar">
-        <div className="logo">EVENTFUNDING</div>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
-        </ul>
-      </nav> */}
+    <>
       <Navbar />
 
-      {/* Welcome Section */}
-      <section className="hero full-screen" id="home">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1>Welcome to EventFunding!</h1>
-          <p>Empowering communities by connecting events and donations.</p>
-          <div className="cta-buttons">
-            <a href="/register" className="btn-primary">Get Started</a>
-            <a href="/login" className="btn-secondary">Login</a>
-          </div>
-        </motion.div>
-      </section>
+      {/* Hero Section */}
+      <header className="hero">
+        <h1>Welcome to EventFunding!</h1>
+        <p>Empowering communities by connecting events and donations.</p>
+        <button className="btn btn-success"><Link to="/register">Get Started</Link></button>
+      </header>
 
       {/* Features Section */}
-      <section className="features full-screen" id="features">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2>Our Features</h2>
-          <div className="features-grid">
-            <motion.div 
-              className="feature-card"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3>Create Events</h3>
-              <p>Organize events and reach a wider audience effortlessly.</p>
-            </motion.div>
-            <motion.div 
-              className="feature-card"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3>Secure Donations</h3>
-              <p>Receive and manage donations with transparency and ease.</p>
-            </motion.div>
-            <motion.div 
-              className="feature-card"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3>Community Engagement</h3>
-              <p>Connect with people passionate about your cause.</p>
-            </motion.div>
+      <section id="features" className="features">
+        <h2>Our Features</h2>
+        <div className="feature-cards">
+          <div className="card">
+            <h3>User Roles & Authentication</h3>
+            <p>Secure registration for Organizations, Volunteers, and Event Visitors.</p>
           </div>
-        </motion.div>
+          <div className="card">
+            <h3>Event Management</h3>
+            <p>Create and manage events with admin approval for security.</p>
+          </div>
+          <div className="card">
+            <h3>Event Participation</h3>
+            <p>Book seats, donate, and participate in events seamlessly.</p>
+          </div>
+          <div className="card">
+            <h3>Payment & Donations</h3>
+            <p>Secure payments and donations via Stripe/PayPal integration.</p>
+          </div>
+          <div className="card">
+            <h3>Security Features</h3>
+            <p>Role-based access control and fraud prevention measures.</p>
+          </div>
+          <div className="card">
+            <h3>Additional Features</h3>
+            <p>Notifications, Reviews, Filtering, and Dashboard Analytics.</p>
+          </div>
+        </div>
       </section>
 
       {/* About Us Section */}
-      <section className="about full-screen" id="about">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2>About Us</h2>
-          <p>EventFunding bridges the gap between event organizers and donors, creating meaningful connections and empowering communities.</p>
-        </motion.div>
+      <section id="about" className="about">
+        <h2>About Us</h2>
+        <p>
+          The Event Funding Management Platform is designed to facilitate event organization and fundraising. 
+          We empower communities by connecting events and donations, providing a seamless user experience 
+          for both organizations and event attendees.
+        </p>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <p>&copy; {new Date().getFullYear()} EventFunding. All rights reserved.</p>
       </footer>
-    </div>
+    </>
   );
 };
 

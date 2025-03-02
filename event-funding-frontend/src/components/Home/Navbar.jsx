@@ -6,7 +6,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container">
+        {/* Logo acts as a Home link */}
         <Link className="navbar-brand" to="/">
+          <img src="./logo.webp" alt="EventFunding" className="logo-img" />
           EVENTFUNDING
         </Link>
         <button
@@ -23,19 +25,14 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/features">
+              <a className="nav-link" href="#features">
                 Features
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
+              <a className="nav-link" href="#about">
                 About Us
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/login">
