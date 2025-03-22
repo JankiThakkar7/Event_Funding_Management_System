@@ -9,7 +9,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
     name: "",
     description: "",
     website: "",
@@ -51,15 +51,15 @@ const Register = () => {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       errors.password = passwordRegex.test(value)
         ? ""
-        : "Password must be at least 8 characters with uppercase, lowercase, number, and special character";
+        : "Password must have 8+ chars, uppercase, lowercase, number, and special character";
     }
 
-    if (name === "confirmPassword") {
-      errors.confirmPassword = value === formData.password ? "" : "Passwords do not match";
+    if (name === "confirm_password") {
+      errors.confirm_password = value === formData.password ? "" : "Passwords do not match";
     }
 
     if (role === "organization") {
-      const requiredFields = ["name", "contact_email", "contact_number", "street_address", "city", "state", "country", "zip_code"];
+      const requiredFields = ["name", "contact_email", "contact_number", "password", "confirm_password"];
       if (requiredFields.includes(name) && value.trim() === "") {
         errors[name] = "This field is required";
       }
@@ -78,6 +78,17 @@ const Register = () => {
     setFormErrors(errors);
   };
 
+  // Validate all fields before submission
+  const validateForm = () => {
+    let errors = {};
+    Object.keys(formData).forEach((key) => {
+      validateField(key, formData[key]);
+    });
+
+    setFormErrors(errors);
+    return Object.values(errors).every((error) => error === "");
+  };
+
   // Handle role change
   const handleRoleChange = (e) => {
     setRole(e.target.value);
@@ -86,43 +97,51 @@ const Register = () => {
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let errors = {};
-    
-    // Validate all fields before submission
+  
+    // Validate form before submission
     Object.keys(formData).forEach((key) => validateField(key, formData[key]));
-
+  
     if (Object.values(formErrors).some((error) => error)) {
       console.log("Fix errors before submitting");
       return;
     }
-
+  
     setLoading(true);
-
-    const url = "http://127.0.0.1:8000/api/register/";
-    const payload = role === "user" ? {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      role: "visitor", // Adjust if needed for different user roles
-    } : {
-      name: formData.name,
-      description: formData.description,
-      website: formData.website,
-      contact_email: formData.contact_email,
-      contact_number: formData.contact_number,
-      street_address: formData.street_address,
-      city: formData.city,
-      state: formData.state,
-      country: formData.country,
-      zip_code: formData.zip_code,
-      admin_name: formData.admin_name,
-      admin_contact_email: formData.admin_contact_email,
-      industry_type: formData.industry_type,
-      facebook: formData.facebook,
-      twitter: formData.twitter,
-      linkedin: formData.linkedin,
-    };
-
+  
+    // Select API endpoint based on role
+    const url =
+      role === "user"
+        ? "http://127.0.0.1:8000/api/register/user/"
+        : "http://127.0.0.1:8000/api/register/organization/";
+  
+    // Prepare payload based on selected role
+    const payload =
+      role === "user"
+        ? {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }
+        : {
+            name: formData.name,
+            description: formData.description,
+            website: formData.website,
+            contact_email: formData.contact_email,
+            contact_number: formData.contact_number,
+            street_address: formData.street_address,
+            city: formData.city,
+            state: formData.state,
+            country: formData.country,
+            zip_code: formData.zip_code,
+            industry_type: formData.industry_type,
+            facebook: formData.facebook,
+            twitter: formData.twitter,
+            linkedin: formData.linkedin,
+            admin_name: formData.admin_name,
+            admin_contact_email: formData.admin_contact_email,
+            password: formData.password,  // ✅ Added password field for organizations
+          };
+  
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -131,9 +150,9 @@ const Register = () => {
         },
         body: JSON.stringify(payload),
       });
-
+  
       const data = await response.json();
-      
+  
       if (response.ok) {
         console.log("Registration successful:", data);
         alert("Registration successful!");
@@ -149,6 +168,7 @@ const Register = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="register-wrapper">
@@ -165,7 +185,7 @@ const Register = () => {
 
         {role === "user" && (
           <>
-            {["username", "email", "password", "confirmPassword"].map((field) => (
+            {["username", "email", "password", "confirm_password"].map((field) => (
               <div className="form-group half-width" key={field}>
                 <label>{field.replace("_", " ").toUpperCase()}</label>
                 <input
@@ -186,11 +206,11 @@ const Register = () => {
         {role === "organization" && (
           <>
             <h3 className="full-width">Organization Details</h3>
-            {["name", "description", "website", "contact_email", "contact_number", "street_address", "city", "state", "country", "zip_code", "admin_name", "admin_contact_email", "industry_type", "facebook", "twitter", "linkedin"].map((field) => (
+            {["name", "password", "confirm_password", "description", "website", "contact_email", "contact_number", "street_address", "city", "state", "country", "zip_code", "admin_name", "admin_contact_email", "industry_type", "facebook", "twitter", "linkedin"].map((field) => (
               <div className="form-group half-width" key={field}>
                 <label>{field.replace("_", " ").toUpperCase()}</label>
                 <input
-                  type={field.includes("email") ? "email" : "text"}
+                  type={field.includes("password") ? "password" : "text"}
                   name={field}
                   className="form-control"
                   placeholder={`Enter ${field.replace("_", " ")}`}

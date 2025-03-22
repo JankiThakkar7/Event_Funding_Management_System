@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import './Home.css';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const role = localStorage.getItem("role");
+
+    if (accessToken) {
+      // Redirect based on role
+      if (role === "organization") {
+        navigate("/admin/dashboard");
+      } else if (role === "user") {
+        navigate("/user/dashboard");
+      }
+    }
+  }, [navigate]);
+
   return (
     <>
       <Navbar />
@@ -12,7 +29,9 @@ const Home = () => {
       <header className="hero">
         <h1>Welcome to EventFunding!</h1>
         <p>Empowering communities by connecting events and donations.</p>
-        <button className="btn btn-success"><Link to="/register">Get Started</Link></button>
+        <button className="btn btn-success">
+          <Link to="/register">Get Started</Link>
+        </button>
       </header>
 
       {/* Features Section */}
