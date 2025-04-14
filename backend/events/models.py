@@ -64,8 +64,22 @@ class Admin(models.Model):
     
 class Volunteer(models.Model):
     vol_id = models.AutoField(primary_key=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name="volunteers")
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name="volunteers")
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)  # 🔥 Add password field
     joined_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.password.startswith("pbkdf2_sha256$"):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
+    def __str__(self):
+        return self.username
 
 class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
@@ -111,3 +125,9 @@ class Review(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     rating = models.IntegerField()
     comment = models.TextField()
+
+class Notification(models.Model):
+    volunteer = models.ForeignKey(Volunteer, related_name='notifications', on_delete=models.CASCADE)
+    message = models.TextField()
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)

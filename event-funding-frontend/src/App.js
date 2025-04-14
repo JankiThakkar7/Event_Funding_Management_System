@@ -5,6 +5,7 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import UserDashboard from "./components/User/UserDashboard";
+import VolunteerNotification from "./components/Volunteer/VolunteerNotification"; // Updated: Volunteer Notification Page
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import ResetPassword from "./components/Auth/ResetPassword";
@@ -20,14 +21,18 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-        {/* Private Routes for Admin and User */}
+        {/* Private Routes */}
         <Route
-          path="/admin/dashboard"
+          path="/admin/*"
           element={<PrivateRoute element={<AdminDashboard />} role="organization" />}
         />
         <Route
           path="/user/dashboard"
           element={<PrivateRoute element={<UserDashboard />} role="user" />}
+        />
+        <Route
+          path="/volunteer/*"
+          element={<PrivateRoute element={<VolunteerNotification />} role="volunteer" />}
         />
 
         {/* Redirect any unknown route to Home */}

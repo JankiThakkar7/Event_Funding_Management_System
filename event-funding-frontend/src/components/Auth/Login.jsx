@@ -44,13 +44,15 @@ const Login = () => {
       // ✅ Store token and role in localStorage correctly
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("refreshToken", refresh_token || ""); // Optional if not provided
-      localStorage.setItem("role", type); // "organization" or "user"
+      localStorage.setItem("role", type); // "organization", "user", or "volunteer"
   
       alert("Login Successful!");
   
-      // ✅ Correct role checking
+      // ✅ Correct role checking and navigation
       if (type === "organization") {
         navigate("/admin/dashboard"); // Redirect for organization
+      } else if (type === "volunteer") {
+        navigate("/volunteer/dashboard"); // Redirect for volunteer
       } else {
         navigate("/user/dashboard"); // Redirect for user
       }
@@ -63,61 +65,49 @@ const Login = () => {
     }
   };
   
-  
-
   return (
-    <div class="login-wrapper">
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="login-title">Login to EventFunding</h2>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              placeholder="Enter email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    <div className="login-wrapper">
+      <div className="login-container">
+        <div className="login-card">
+          <h2 className="login-title">Login to EventFunding</h2>
+          {error && <p className="error-message">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                placeholder="Enter email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="Enter password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          {/* <div className="form-group remember-me">
-            <input
-              type="checkbox"
-              name="rememberMe"
-              checked={formData.rememberMe}
-              onChange={handleChange}
-            />
-            <label>Remember Me</label>
-          </div> */}
+            <button type="submit" className="login-btn">Login</button>
 
-          <button type="submit" className="login-btn">Login</button>
-
-          <div className="form-links">
-            <Link to="/forgot-password">Forgot Password?</Link>
-            <span> | </span>
-            <Link to="/register">Create an Account</Link>
-          </div>
-        </form>
+            <div className="form-links">
+              <Link to="/forgot-password">Forgot Password?</Link>
+              <span> | </span>
+              <Link to="/register">Create an Account</Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

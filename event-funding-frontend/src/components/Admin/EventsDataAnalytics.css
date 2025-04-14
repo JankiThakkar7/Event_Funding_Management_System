@@ -1,0 +1,52 @@
+.events-data-analytics {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  h2, h4 {
+    color: #333;
+  }
+  
+  .card h4 {
+    margin-bottom: 20px;
+  }
+  
+  .bar-chart, .pie-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card .recharts-cartesian-grid line {
+    stroke: #ccc;
+  }
+  
+  .card .recharts-bar-rectangle {
+    stroke: #fff;
+  }
+  
+  .card .recharts-tooltip-wrapper {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+    border-radius: 6px;
+  }
+  
+  .card .recharts-legend-wrapper {
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 20px;
+    }
+  }
+  
